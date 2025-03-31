@@ -1,3 +1,5 @@
+package pixelcraft;
+
 public class ARGB {
 
     public int alpha, red, green, blue;
