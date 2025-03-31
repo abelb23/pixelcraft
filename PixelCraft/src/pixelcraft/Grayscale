@@ -1,1 +1,53 @@
 
+/**
+ * Converts an image to grayscale using recursive techniques without any loops.
+ * This implementation converts each pixel to grayscale by averaging its RGB values.
+ */
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+public class Grayscale extends Converter {
+    public void convert(String inputFileName, String outputFileName) throws IOException {
+        // Read the original image
+        File inputFile = new File(inputFileName);
+        BufferedImage originalImage = ImageIO.read(inputFile);
+        
+	// Create a new image with the same dimensions and type
+        BufferedImage grayImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(),originalImage.getType());
+       
+	// Process the image recursively
+        processImage(originalImage, grayImage, 0, 0);
+ 
+  	// Save the processed image
+        File outputFile = new File(outputFileName);
+        ImageIO.write(grayImage, "PNG", outputFile);
+  
+        System.out.println("Grayscale conversion complete: " + outputFileName);
+    }
+    
+    private void processImage(BufferedImage original, BufferedImage result, int x, int y) {
+        // Base case: we've processed the entire image
+        if (y >= original.getHeight()) {
+            return;
+        }
+        
+        if (x < original.getWidth()) {
+            int rgb = original.getRGB(x, y);
+            int grayRgb = convertPixelToGray(rgb);
+            result.setRGB(x, y, grayRgb);
+            processImage(original, result, x + 1, y);
+        } else {
+            // Move to the next row
+            processImage(original, result, 0, y + 1);
+        }
+    }
+    
+    private int convertPixelToGray(int pixel) {
+        ARGB argb = new ARGB(pixel);
+        int gray = (argb.red + argb.green + argb.blue) / 3;
+        return new ARGB(argb.alpha, gray, gray, gray).toInt();
+    }
+}
