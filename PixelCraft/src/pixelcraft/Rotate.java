@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Rotate extends Converter {
 
-    @Override
+    
     public BufferedImage processImage(BufferedImage originalImage) {
         int originalWidth = originalImage.getWidth();
         int originalHeight = originalImage.getHeight();
