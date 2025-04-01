@@ -1,4 +1,3 @@
-package pixelcraft;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
